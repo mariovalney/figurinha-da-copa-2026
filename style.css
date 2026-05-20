@@ -445,9 +445,9 @@ main {
 /* --- large background "26" --- */
 .c-bg-num {
     position: absolute;
-    left: -15px;
+    left: 50%;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     font-family: var(--font-num);
     font-size: 660px;
     font-weight: 900;
@@ -477,7 +477,7 @@ main {
     position: absolute;
     bottom: calc(var(--cfh) - 8px);
     left: 50%;
-    transform: translateX(calc(-50% - 14px));
+    transform: translateX(calc(-50% - 24px));
     height: 520px;
     width: auto;
     max-width: 360px;
@@ -504,9 +504,9 @@ main {
     top: 0;
     right: 0;
     width: var(--csb);
-    height: calc(var(--ch) - var(--cfh));
+    height: 100%;
     background: #fff;
-    z-index: 5;
+    z-index: 7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -553,9 +553,8 @@ main {
     z-index: 6;
     display: flex;
     align-items: center;
-    padding: 12px 14px 10px 18px;
+    padding: 12px calc(var(--csb) + 8px) 10px 18px;
     gap: 10px;
-    box-shadow: 0 -4px 14px rgba(0,0,0,.08);
 }
 
 .c-info {

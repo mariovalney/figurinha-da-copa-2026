@@ -1,4 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 70" fill="white" font-family="Arial Black, Impact, sans-serif">
-  <text x="23" y="22" text-anchor="middle" font-size="14" font-weight="900" letter-spacing="1">FIFA</text>
-  <text x="23" y="62" text-anchor="middle" font-size="46" font-weight="900" letter-spacing="-3">26</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 90" fill="none">
+  <!-- Trophy cup body -->
+  <path d="M14 8 h32 v24 c0 14-8 22-16 26 c-8-4-16-12-16-26 Z"
+        fill="white" opacity="0.92"/>
+  <!-- Trophy handles -->
+  <path d="M14 12 Q6 14 6 22 Q6 30 14 30" stroke="white" stroke-width="3" fill="none" opacity="0.92"/>
+  <path d="M46 12 Q54 14 54 22 Q54 30 46 30" stroke="white" stroke-width="3" fill="none" opacity="0.92"/>
+  <!-- Trophy stem -->
+  <rect x="26" y="58" width="8" height="10" fill="white" opacity="0.92"/>
+  <!-- Trophy base -->
+  <rect x="18" y="68" width="24" height="5" rx="2" fill="white" opacity="0.92"/>
+  <!-- FIFA text -->
+  <text x="30" y="86" text-anchor="middle"
+        font-family="Arial Black, Impact, sans-serif"
+        font-size="14" font-weight="900"
+        fill="#647C80" letter-spacing="1">FIFA</text>
 </svg>

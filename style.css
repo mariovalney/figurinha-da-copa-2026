@@ -1,5 +1,5 @@
 /* ================================================================
-   FONT — FIFA 26 by Bynit (fontstruct.com/fontstructions/show/2296625)
+   FONT - FIFA 26 by Bynit (fontstruct.com/fontstructions/show/2296625)
    Licença não-comercial. Não use como webfont em projetos comerciais.
 ================================================================ */
 @font-face {
@@ -25,7 +25,7 @@
     --g800:    #1f2937;
     --radius:  12px;
 
-    /* Card dimensions — 49×65mm physical ratio at 600px height: width = round(600*49/65) = 452px */
+    /* Card dimensions - 49×65mm physical ratio at 600px height: width = round(600*49/65) = 452px */
     --cw: 452px;
     --ch: 600px;
     --csb: 48px;   /* sidebar width  */
@@ -311,6 +311,42 @@ main {
     .field-row { grid-template-columns: 1fr 1fr; }
 }
 
+.suffix-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--g200);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+.suffix-wrap:focus-within { border-color: var(--teal); }
+.suffix-wrap input {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    height: 44px;
+    padding: 0 8px 0 14px;
+    font-size: 0.95rem;
+    color: var(--g800);
+    background: var(--white);
+    font-family: inherit;
+    outline: none;
+    min-width: 0;
+}
+.suffix-unit {
+    padding: 0 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--g500);
+    background: var(--g100);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    border-left: 1.5px solid var(--g200);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 /* ================================================================
    BUTTONS
 ================================================================ */
@@ -372,7 +408,7 @@ main {
 }
 
 /* ================================================================
-   STICKER CARD  — 500 × 700 px
+   STICKER CARD  - 500 × 700 px
 ================================================================ */
 #sticker-card {
     position: relative;
@@ -383,7 +419,6 @@ main {
     background-color: #4DD9D5;
     flex-shrink: 0;
     transform-origin: top center;
-    box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 4px 16px rgba(0,0,0,.12);
     user-select: none;
     -webkit-font-smoothing: antialiased;
 }
@@ -573,9 +608,13 @@ main {
 /* ================================================================
    APP FOOTER
 ================================================================ */
-.app-footer {
-    text-align: center;
-    font-size: 0.72rem;
+.app-footer p {
+    width: 670px;
+    max-width: 100%;
+    text-align: justify;
+    text-align-last: center;
+    margin: 3rem auto 0;
+    font-size: 0.6rem;
     color: var(--g500);
     line-height: 1.6;
 }

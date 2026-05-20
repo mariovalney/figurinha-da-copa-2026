@@ -79,34 +79,33 @@
 
                         <div class="field">
                             <label for="f-name">Nome completo</label>
-                            <input id="f-name" type="text" placeholder="VINÍCIUS JÚNIOR" autocomplete="off" spellcheck="false">
+                            <input id="f-name" type="text" placeholder="NOME DO JOGADOR" autocomplete="off" spellcheck="false">
                         </div>
 
                         <div class="field-row">
                             <div class="field">
                                 <label for="f-birth">Nascimento</label>
-                                <input id="f-birth" type="text" placeholder="12-7-2000" maxlength="12">
+                                <input id="f-birth" type="text" placeholder="DD-MM-AAAA" maxlength="10">
                             </div>
                             <div class="field">
                                 <label for="f-height">Altura</label>
-                                <input id="f-height" type="text" placeholder="1,76m" maxlength="8">
+                                <div class="suffix-wrap">
+                                    <input id="f-height" type="text" placeholder="1,76" maxlength="5">
+                                    <span class="suffix-unit">m</span>
+                                </div>
                             </div>
                             <div class="field">
                                 <label for="f-weight">Peso</label>
-                                <input id="f-weight" type="text" placeholder="73 kg" maxlength="8">
+                                <div class="suffix-wrap">
+                                    <input id="f-weight" type="text" placeholder="73" maxlength="4">
+                                    <span class="suffix-unit">kg</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="field">
                             <label for="f-club">Time e país</label>
-                            <input id="f-club" type="text" placeholder="REAL MADRID CF (ESP)" autocomplete="off">
-                        </div>
-
-                        <div class="field">
-                            <label for="f-country">País / Seleção</label>
-                            <select id="f-country">
-                                <option value="">Selecione o país…</option>
-                            </select>
+                            <input id="f-club" type="text" placeholder="TIME (PAÍS)" autocomplete="off">
                         </div>
 
                         <footer class="panel-footer">
@@ -152,10 +151,10 @@
             <div class="preview-col" id="preview-col">
                 <div class="card-stage">
                     <!--
-                        STICKER CARD — 500×700px
+                        STICKER CARD - 500×700px
                         Assets em /assets/logo/:
-                          fifa-logo.png    — logotipo FIFA
-                          panini-logo.png  — badge Panini
+                          fifa-logo.png    - logotipo FIFA
+                          panini-logo.png  - badge Panini
                         Bandeiras em /assets/flags/bandeira-{COD}.png
                     -->
                     <div id="sticker-card">
@@ -171,14 +170,14 @@
                         <!-- Player photo -->
                         <img class="c-photo" id="c-photo" src="assets/jogador.png" alt="Jogador">
 
-                        <!-- FIFA logo — teal background, top-right corner -->
+                        <!-- FIFA logo - teal background, top-right corner -->
                         <img class="c-fifa" src="assets/logo/fifa-logo.png" alt="FIFA 26"
                              onerror="this.src='assets/logo/fifa-logo.svg';this.onerror=null;">
 
                         <!-- Right sidebar: flag + country code -->
                         <div class="c-sidebar">
                             <div class="c-flag-wrap">
-                                <img class="c-flag" id="c-flag" src="" alt="Bandeira"
+                                <img class="c-flag" id="c-flag" src="assets/flags/bandeira-bra.svg" alt="Bandeira Brasil"
                                      onerror="this.style.visibility='hidden'">
                             </div>
                             <span class="c-code" id="c-code">BRA</span>
@@ -203,7 +202,8 @@
 
         <footer class="app-footer">
             <p>
-                Projeto pessoal, não comercial. Nenhuma imagem ou dado é armazenado — tudo é processado
+                Criado por Mário Valney - Divirta-se!
+                Projeto pessoal, não comercial. Nenhuma imagem ou dado é armazenado, tudo é processado
                 localmente no seu navegador. Não somos afiliados à FIFA, Panini ou qualquer outra marca mencionada.
                 Fonte <a href="https://fontstruct.com/fontstructions/show/2296625" target="_blank" rel="noopener noreferrer">"FIFA 26"</a>
                 por Bynit, licença não-comercial FontStruct.

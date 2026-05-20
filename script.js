@@ -1,73 +1,6 @@
 'use strict';
 
 // ================================================================
-// COUNTRIES
-// ================================================================
-const COUNTRIES = [
-    { code: 'ALG', name: 'Argélia' },
-    { code: 'ARG', name: 'Argentina' },
-    { code: 'AUS', name: 'Austrália' },
-    { code: 'AUT', name: 'Áustria' },
-    { code: 'BEL', name: 'Bélgica' },
-    { code: 'BOL', name: 'Bolívia' },
-    { code: 'BRA', name: 'Brasil' },
-    { code: 'CMR', name: 'Camarões' },
-    { code: 'CAN', name: 'Canadá' },
-    { code: 'CHI', name: 'Chile' },
-    { code: 'CIV', name: 'Costa do Marfim' },
-    { code: 'CRC', name: 'Costa Rica' },
-    { code: 'CRO', name: 'Croácia' },
-    { code: 'DEN', name: 'Dinamarca' },
-    { code: 'ECU', name: 'Equador' },
-    { code: 'EGY', name: 'Egito' },
-    { code: 'SCO', name: 'Escócia' },
-    { code: 'SVK', name: 'Eslováquia' },
-    { code: 'SVN', name: 'Eslovênia' },
-    { code: 'ESP', name: 'Espanha' },
-    { code: 'USA', name: 'Estados Unidos' },
-    { code: 'FRA', name: 'França' },
-    { code: 'GHA', name: 'Gana' },
-    { code: 'GER', name: 'Alemanha' },
-    { code: 'GRE', name: 'Grécia' },
-    { code: 'HON', name: 'Honduras' },
-    { code: 'HUN', name: 'Hungria' },
-    { code: 'ENG', name: 'Inglaterra' },
-    { code: 'IRL', name: 'Irlanda' },
-    { code: 'IRN', name: 'Irã' },
-    { code: 'ITA', name: 'Itália' },
-    { code: 'JAM', name: 'Jamaica' },
-    { code: 'JPN', name: 'Japão' },
-    { code: 'JOR', name: 'Jordânia' },
-    { code: 'MAR', name: 'Marrocos' },
-    { code: 'MEX', name: 'México' },
-    { code: 'NGA', name: 'Nigéria' },
-    { code: 'NOR', name: 'Noruega' },
-    { code: 'NZL', name: 'Nova Zelândia' },
-    { code: 'NED', name: 'Holanda' },
-    { code: 'PAN', name: 'Panamá' },
-    { code: 'PAR', name: 'Paraguai' },
-    { code: 'PER', name: 'Peru' },
-    { code: 'POL', name: 'Polônia' },
-    { code: 'POR', name: 'Portugal' },
-    { code: 'QAT', name: 'Qatar' },
-    { code: 'ROM', name: 'Romênia' },
-    { code: 'SAU', name: 'Arábia Saudita' },
-    { code: 'SEN', name: 'Senegal' },
-    { code: 'SRB', name: 'Sérvia' },
-    { code: 'SUI', name: 'Suíça' },
-    { code: 'SWE', name: 'Suécia' },
-    { code: 'TUN', name: 'Tunísia' },
-    { code: 'TUR', name: 'Turquia' },
-    { code: 'UKR', name: 'Ucrânia' },
-    { code: 'URU', name: 'Uruguai' },
-    { code: 'VEN', name: 'Venezuela' },
-    { code: 'WAL', name: 'País de Gales' },
-    { code: 'KOR', name: 'Coreia do Sul' },
-    { code: 'CZE', name: 'República Tcheca' },
-    { code: 'SLV', name: 'El Salvador' },
-];
-
-// ================================================================
 // STATE
 // ================================================================
 const state = {
@@ -77,7 +10,6 @@ const state = {
     height:  '',
     weight:  '',
     club:    '',
-    country: '',
 };
 
 // ================================================================
@@ -89,7 +21,6 @@ const $ = id => document.getElementById(id);
 // BOOTSTRAP
 // ================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    populateCountries();
     bindStep1();
     bindStep2();
     bindStep3();
@@ -98,21 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================================================
-// COUNTRY SELECT
-// ================================================================
-function populateCountries() {
-    const sel = $('f-country');
-    const sorted = [...COUNTRIES].sort((a, b) => a.name.localeCompare(b.name, 'pt'));
-    sorted.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c.code;
-        opt.textContent = `${c.name} (${c.code})`;
-        sel.appendChild(opt);
-    });
-}
-
-// ================================================================
-// STEP 1 — PHOTO
+// STEP 1 - PHOTO
 // ================================================================
 function bindStep1() {
     const fileInput  = $('file-input');
@@ -157,29 +74,71 @@ function loadPhoto(file, previewEl, promptEl, nextBtn) {
 }
 
 // ================================================================
-// STEP 2 — PLAYER DATA
+// STEP 2 - PLAYER DATA
 // ================================================================
 function bindStep2() {
     $('back-2').addEventListener('click', () => goTo(1));
     $('next-2').addEventListener('click', () => { captureForm(); goTo(3); });
 
-    // Live preview while typing
-    ['f-name','f-birth','f-height','f-weight','f-club','f-country'].forEach(id => {
+    $('f-birth').addEventListener('input', e => { applyDateMask(e.target); captureForm(); updateCard(); });
+    $('f-height').addEventListener('input', e => { applyHeightMask(e.target); captureForm(); updateCard(); });
+    $('f-weight').addEventListener('input', e => { applyWeightMask(e.target); captureForm(); updateCard(); });
+
+    ['f-name', 'f-club'].forEach(id => {
         $(id).addEventListener('input', () => { captureForm(); updateCard(); });
     });
 }
 
+// ----------------------------------------------------------------
+// Input masks
+// ----------------------------------------------------------------
+
+function applyDateMask(input) {
+    // Allow only digits; auto-insert hyphens at positions 2 and 5
+    let v = input.value.replace(/[^\d]/g, '');
+    if (v.length > 8) v = v.slice(0, 8);
+    let out = '';
+    for (let i = 0; i < v.length; i++) {
+        if (i === 2 || i === 4) out += '-';
+        out += v[i];
+    }
+    input.value = out;
+}
+
+function applyHeightMask(input) {
+    // Allow only digits and one comma (e.g. 1,76)
+    let v = input.value.replace(/[^\d,]/g, '');
+    const parts = v.split(',');
+    if (parts.length > 2) v = parts[0] + ',' + parts.slice(1).join('');
+    input.value = v;
+}
+
+function applyWeightMask(input) {
+    // Allow only digits
+    input.value = input.value.replace(/[^\d]/g, '');
+}
+
+// ----------------------------------------------------------------
+// Capture form state
+// ----------------------------------------------------------------
+
 function captureForm() {
-    state.name    = $('f-name').value.trim();
-    state.birth   = $('f-birth').value.trim();
-    state.height  = $('f-height').value.trim();
-    state.weight  = $('f-weight').value.trim();
-    state.club    = $('f-club').value.trim();
-    state.country = $('f-country').value;
+    state.name   = $('f-name').value.trim();
+    state.birth  = formatBirthForCard($('f-birth').value.trim());
+    state.height = $('f-height').value.trim() ? $('f-height').value.trim() + 'm' : '';
+    state.weight = $('f-weight').value.trim() ? $('f-weight').value.trim() + ' kg' : '';
+    state.club   = $('f-club').value.trim();
+}
+
+// Strip leading zeros from day and month: "12-07-2000" -> "12-7-2000"
+function formatBirthForCard(raw) {
+    if (!raw) return '';
+    const parts = raw.split('-');
+    return parts.map(p => String(parseInt(p, 10) || p)).join('-');
 }
 
 // ================================================================
-// STEP 3 — DOWNLOAD
+// STEP 3 - DOWNLOAD
 // ================================================================
 function bindStep3() {
     $('back-3').addEventListener('click', () => goTo(2));
@@ -244,19 +203,6 @@ function updateCard() {
     } else {
         clubEl.style.display = 'none';
     }
-
-    // Flag + country code
-    const flagEl = $('c-flag');
-    const codeEl = $('c-code');
-    const code   = state.country || 'BRA';
-    codeEl.textContent = code;
-    flagEl.style.visibility = '';
-    const base = `assets/flags/bandeira-${code.toLowerCase()}`;
-    flagEl.onerror = () => {
-        flagEl.onerror = () => { flagEl.style.visibility = 'hidden'; };
-        flagEl.src = `${base}.svg`;
-    };
-    flagEl.src = `${base}.png`;
 }
 
 // ================================================================
@@ -341,12 +287,12 @@ function downloadCard() {
         })
         .finally(() => {
             document.body.removeChild(clone);
-            const icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2.5" stroke-linecap="round">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg> Baixar Figurinha`;
+            const icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+                + ' stroke-width="2.5" stroke-linecap="round">'
+                + '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>'
+                + '<polyline points="7 10 12 15 17 10"/>'
+                + '<line x1="12" y1="15" x2="12" y2="3"/>'
+                + '</svg> Baixar Figurinha';
             btns.forEach(b => { b.disabled = false; b.innerHTML = icon; });
         });
     }, 80));

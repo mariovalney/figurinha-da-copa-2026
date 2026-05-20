@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figurinha da Copa 2026</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>Figurinha da Copa <em>2026</em></h1>
+            <p>Crie sua figurinha personalizada no estilo Panini</p>
+        </header>
+
+        <nav class="steps-nav" aria-label="Etapas">
+            <div class="step-node active" data-n="1">
+                <span class="step-badge">1</span>
+                <span class="step-label">Foto</span>
+            </div>
+            <div class="step-connector" id="sc-1"></div>
+            <div class="step-node" data-n="2">
+                <span class="step-badge">2</span>
+                <span class="step-label">Dados</span>
+            </div>
+            <div class="step-connector" id="sc-2"></div>
+            <div class="step-node" data-n="3">
+                <span class="step-badge">3</span>
+                <span class="step-label">Figurinha</span>
+            </div>
+        </nav>
+
+        <main>
+            <!-- STEP 1 -->
+            <section class="step-panel" id="panel-1" aria-label="Etapa 1: Foto">
+                <h2>Escolha sua foto</h2>
+
+                <label class="drop-zone" id="drop-zone" for="file-input">
+                    <input type="file" id="file-input" accept="image/jpeg,image/png" aria-label="Enviar foto">
+                    <div class="drop-prompt" id="drop-prompt">
+                        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#4DD9D5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <p>Clique ou arraste sua foto aqui</p>
+                        <span>JPG ou PNG</span>
+                    </div>
+                    <img id="photo-preview" class="photo-preview hidden" alt="Preview da foto">
+                </label>
+
+                <p class="tip">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    Sua foto precisa estar <strong>sem fundo</strong>. Remova gratuitamente em
+                    <a href="https://www.remove.bg" target="_blank" rel="noopener noreferrer">remove.bg</a>
+                </p>
+
+                <footer class="panel-footer">
+                    <button class="btn primary" id="next-1" disabled>
+                        Próximo
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </footer>
+            </section>
+
+            <!-- STEP 2 -->
+            <section class="step-panel hidden" id="panel-2" aria-label="Etapa 2: Dados do jogador">
+                <h2>Dados do jogador</h2>
+
+                <div class="field">
+                    <label for="f-name">Nome completo</label>
+                    <input id="f-name" type="text" placeholder="VINÍCIUS JÚNIOR" autocomplete="off" spellcheck="false">
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="f-birth">Nascimento</label>
+                        <input id="f-birth" type="text" placeholder="12-7-2000" maxlength="12">
+                    </div>
+                    <div class="field">
+                        <label for="f-height">Altura</label>
+                        <input id="f-height" type="text" placeholder="1,76m" maxlength="8">
+                    </div>
+                    <div class="field">
+                        <label for="f-weight">Peso</label>
+                        <input id="f-weight" type="text" placeholder="73 kg" maxlength="8">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="f-club">Time e país</label>
+                    <input id="f-club" type="text" placeholder="REAL MADRID CF (ESP)" autocomplete="off">
+                </div>
+
+                <div class="field">
+                    <label for="f-country">País / Seleção</label>
+                    <select id="f-country">
+                        <option value="">Selecione o país…</option>
+                    </select>
+                </div>
+
+                <footer class="panel-footer">
+                    <button class="btn secondary" id="back-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        Voltar
+                    </button>
+                    <button class="btn primary" id="next-2">
+                        Próximo
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </footer>
+            </section>
+
+            <!-- STEP 3 -->
+            <section class="step-panel hidden" id="panel-3" aria-label="Etapa 3: Preview e download">
+                <h2>Sua figurinha</h2>
+
+                <div class="card-stage">
+                    <!--
+                        STICKER CARD — 500×700px
+                        Assets esperados em /assets/:
+                          fifa-logo.png    — logotipo FIFA branco
+                          panini-logo.png  — badge Panini
+                          flags/bandeira-{COD}.png — ex: bandeira-bra.png
+                        Substitua os .svg de placeholder pelos .png reais quando disponíveis.
+                    -->
+                    <div id="sticker-card">
+                        <!-- Holographic shimmer -->
+                        <div class="c-holo"></div>
+
+                        <!-- Background "26" -->
+                        <div class="c-bg-num">26</div>
+
+                        <!-- Yellow accent behind player -->
+                        <div class="c-gold"></div>
+
+                        <!-- Player photo -->
+                        <img class="c-photo" id="c-photo" src="" alt="Jogador">
+
+                        <!-- FIFA logo — teal background, top-right corner (white logo) -->
+                        <img class="c-fifa" src="assets/fifa-logo.png" alt="FIFA 26"
+                             onerror="this.src='assets/fifa-logo.svg';this.onerror=null;">
+
+                        <!-- Right sidebar: flag + country code only -->
+                        <div class="c-sidebar">
+                            <div class="c-flag-wrap">
+                                <img class="c-flag" id="c-flag" src="" alt="Bandeira"
+                                     onerror="this.style.visibility='hidden'">
+                            </div>
+                            <span class="c-code" id="c-code">BRA</span>
+                        </div>
+
+                        <!-- Footer panel -->
+                        <div class="c-footer">
+                            <div class="c-info">
+                                <p class="c-name" id="c-name">NOME DO JOGADOR</p>
+                                <p class="c-stats" id="c-stats">DD-M-AAAA&nbsp;|&nbsp;0,00m&nbsp;|&nbsp;00 kg</p>
+                                <p class="c-club" id="c-club">TIME (PAÍS)</p>
+                            </div>
+                            <img class="c-panini" src="assets/panini-logo.png" alt="Panini"
+                                 onerror="this.src='assets/panini-logo.svg';this.onerror=null;">
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="panel-footer center">
+                    <button class="btn secondary" id="back-3">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        Voltar
+                    </button>
+                    <button class="btn download" id="btn-download">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Baixar Figurinha
+                    </button>
+                </footer>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Projeto não afiliado com FIFA ou Panini.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

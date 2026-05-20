@@ -1,4 +1,16 @@
 /* ================================================================
+   FONT — FIFA 26 by Bynit (fontstruct.com/fontstructions/show/2296625)
+   Licença não-comercial. Não use como webfont em projetos comerciais.
+================================================================ */
+@font-face {
+    font-family: 'FIFA26';
+    src: url('assets/fonts/fifa-26.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ================================================================
    RESET & TOKENS
 ================================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,13 +31,7 @@
     --csb: 52px;   /* sidebar width  */
     --cfh: 140px;  /* footer height  */
 
-    /*
-     * Font for the large background "26" and country code.
-     * Replace with the official Copa 2026 font when available:
-     *   @font-face { font-family: 'Copa2026'; src: url('assets/fonts/copa-2026.woff2'); }
-     *   --font-num: 'Copa2026', 'Arial Black', Impact, sans-serif;
-     */
-    --font-num: 'Arial Black', 'Arial Bold', Impact, sans-serif;
+    --font-num: 'FIFA26', 'Arial Black', 'Arial Bold', Impact, sans-serif;
 }
 
 html { font-size: 16px; }
@@ -41,12 +47,60 @@ body {
    APP SHELL
 ================================================================ */
 .app {
-    max-width: 640px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 28px 16px 56px;
     display: flex;
     flex-direction: column;
     gap: 28px;
+}
+
+/* ================================================================
+   TWO-COLUMN LAYOUT
+================================================================ */
+.app-layout {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.wizard-col {
+    flex: 1;
+    min-width: 0;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.preview-col {
+    width: 360px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 24px;
+}
+
+/* Responsive visibility helpers */
+@media (max-width: 899px) {
+    .app-layout       { flex-direction: column; }
+    .wizard-col       { max-width: 100%; }
+    .preview-col      { width: 100%; position: static; display: none; }
+    .preview-col.show { display: flex; }
+    .desktop-only     { display: none !important; }
+}
+@media (min-width: 900px) {
+    .mobile-only { display: none !important; }
+}
+
+/* Step 3 hint text */
+.step3-hint {
+    font-size: 0.9rem;
+    color: var(--g500);
+    margin-top: -8px;
 }
 
 header { text-align: center; }
@@ -519,4 +573,11 @@ main {
     text-align: center;
     font-size: 0.72rem;
     color: var(--g500);
+    line-height: 1.6;
 }
+.app-footer a {
+    color: var(--g500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.app-footer a:hover { color: var(--g800); }

@@ -25,11 +25,11 @@
     --g800:    #1f2937;
     --radius:  12px;
 
-    /* Card dimensions — used in JS too via CSS vars */
-    --cw: 500px;
-    --ch: 700px;
-    --csb: 52px;   /* sidebar width  */
-    --cfh: 140px;  /* footer height  */
+    /* Card dimensions — 49×65mm physical ratio at 600px height: width = round(600*49/65) = 452px */
+    --cw: 452px;
+    --ch: 600px;
+    --csb: 48px;   /* sidebar width  */
+    --cfh: 120px;  /* footer height  */
 
     --font-num: 'FIFA26', 'Arial Black', 'Arial Bold', Impact, sans-serif;
 }
@@ -74,12 +74,12 @@ body {
 }
 
 .preview-col {
-    width: 360px;
+    width: auto;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 0;
     position: sticky;
     top: 24px;
 }
@@ -91,6 +91,10 @@ body {
     .preview-col      { width: 100%; position: static; display: none; }
     .preview-col.show { display: flex; }
     .desktop-only     { display: none !important; }
+}
+/* On desktop the card-stage width is set by JS; on mobile it fills the column */
+@media (max-width: 899px) {
+    .card-stage { width: 100% !important; }
 }
 @media (min-width: 900px) {
     .mobile-only { display: none !important; }

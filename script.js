@@ -184,7 +184,6 @@ function captureForm() {
 function bindStep3() {
     $('back-3').addEventListener('click', () => goTo(2));
     $('btn-download-mobile').addEventListener('click', downloadCard);
-    $('btn-download-desktop').addEventListener('click', downloadCard);
 }
 
 // ================================================================
@@ -263,17 +262,28 @@ function updateCard() {
 // ================================================================
 // CARD SCALING
 // ================================================================
+const CARD_W = 452;
+const CARD_H = 600;
+
 function scaleCard() {
     const card  = $('sticker-card');
     if (!card) return;
     const stage = card.closest('.card-stage');
     if (!stage) return;
 
-    const availW = stage.clientWidth || (window.innerWidth - 48);
-    const scale  = Math.min(1, availW / 500);
+    // Use the preview column's width as the available space;
+    // fall back to the stage parent or viewport.
+    const col    = $('preview-col');
+    const availW = (col ? col.clientWidth : stage.parentElement?.clientWidth) || (window.innerWidth - 48);
+    const scale  = Math.min(1, availW / CARD_W);
 
-    card.style.transform = `scale(${scale})`;
-    stage.style.height   = `${Math.round(700 * scale)}px`;
+    card.style.transform       = scale < 1 ? `scale(${scale})` : 'none';
+    card.style.transformOrigin = 'top left';
+
+    // Make the stage the exact visual size so preview-col sizes naturally.
+    stage.style.width    = `${Math.round(CARD_W * scale)}px`;
+    stage.style.height   = `${Math.round(CARD_H * scale)}px`;
+    stage.style.overflow = 'hidden';
 }
 
 // ================================================================
@@ -286,7 +296,7 @@ function downloadCard() {
     }
 
     // Disable whichever button triggered the download
-    const btns = [$('btn-download-mobile'), $('btn-download-desktop')].filter(Boolean);
+    const btns = [$('btn-download-mobile')].filter(Boolean);
     btns.forEach(b => { b.disabled = true; b.textContent = 'Gerando…'; });
 
     // Render a full-size off-screen clone so we don't cause visual flash
@@ -298,8 +308,8 @@ function downloadCard() {
         top:       '-9999px',
         left:      '-9999px',
         transform: 'none',
-        width:     '500px',
-        height:    '700px',
+        width:     `${CARD_W}px`,
+        height:    `${CARD_H}px`,
         borderRadius: '16px',
     });
     document.body.appendChild(clone);
@@ -311,8 +321,8 @@ function downloadCard() {
             useCORS:         true,
             allowTaint:      true,
             backgroundColor: null,
-            width:  500,
-            height: 700,
+            width:  CARD_W,
+            height: CARD_H,
             logging: false,
         })
         .then(canvas => {
